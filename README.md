@@ -1,9 +1,9 @@
 # EV Location Finder
 
 An API foundation for finding electric-vehicle charging locations and
-supporting smart route planning. The current release exposes a health endpoint
-and local PostGIS/Redis development services; application features should be
-added behind authenticated, validated API routes.
+supporting smart route planning. The local MVP includes a validated charger
+search endpoint backed by clearly labelled in-memory demo data; PostGIS and
+Redis are ready for the next persistence/integration phase.
 
 ## Local development
 
@@ -14,6 +14,15 @@ added behind authenticated, validated API routes.
 5. Run the API with `uvicorn backend.app.main:app --reload`.
 
 The readiness check is `GET /health`, which returns `{"status":"ok"}`.
+OpenAPI documentation is available at `/docs`. Search chargers with:
+
+`GET /api/v1/chargers?latitude=12.9716&longitude=77.5946&radius_km=25`
+
+Optional filters are `connector` (for example `CCS2`) and
+`available_only=true`. Results include distance in kilometres and are sorted
+nearest first. The bundled locations are demo data, not live availability.
+
+Run the automated checks with `pytest backend/tests`.
 
 ## AI-assisted implementation
 
