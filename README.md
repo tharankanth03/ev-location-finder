@@ -24,6 +24,27 @@ nearest first. The bundled locations are demo data, not live availability.
 
 Run the automated checks with `pytest backend/tests`.
 
+## Hosting on Render
+
+This repository includes `Dockerfile` and `render.yaml` for hosting the API as
+a Render web service. In Render, choose **New > Blueprint**, connect this
+repository, and select `render.yaml`. The service starts without a database
+because the current charger data is explicitly demo data held in memory.
+Configure `POSTGRES_*`, `DATABASE_URL`, and `REDIS_URL` only when the
+persistence integration is added. Render supplies the public HTTPS URL after
+the first successful deploy.
+
+The repository can also be run by any Docker-compatible host:
+
+```powershell
+docker build -t ev-location-finder .
+docker run --rm -p 8000:8000 ev-location-finder
+```
+
+The VisionShield repository is a separate project (`tharankanth03/VISIONSHIELD`);
+its research assets and application files should remain isolated from this
+EV-location-finder service unless an explicit integration contract is added.
+
 ## AI-assisted implementation
 
 This project may use AI-assisted development for scaffolding, code generation,
